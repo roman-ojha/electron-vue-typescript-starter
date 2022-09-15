@@ -61,4 +61,8 @@
         -> base: process.env.ELECTRON=="true" ? './' : ".",
 
 #) STEP 5:
-    
+    -> create main process and preload
+
+#) STEP 6:
+    -> run:
+        -> yarn electron:dev
