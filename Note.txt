@@ -1,1 +1,48 @@
+-> https://dev.to/brojenuel/vite-vue-3-electron-5h4o
 -> yarn create vite
+-> yarn add -D concurrently cross-env electron electron-builder wait-on
+-> yarn install
+*) Build:
+    -> https://www.electron.build/
+    -> Add thi to package.json
+        ->   "build": {
+        "appId": "com.roman.electron-vue",
+        "productName": "electron-vue",
+        "copyright": "Copyright © 2022 ${author}",
+        "mac": {
+        "category": "public.app-category.utilities"
+        },
+        "nsis": {
+        "oneClick": false,
+        // do you want application to get install on one click or not
+        "allowToChangeInstallationDirectory": true
+        // do you want to give access to use to change installation directories
+        },
+        "files": [
+        // this will be the file that will be get packaged with the application
+        "dist/**/*",
+        // dist is the build html of our project
+        "electron/**/*"
+        ],
+        "directories": {
+        // after application get build where we want to see application resources
+        "buildResources": "assets",
+        // output: where you want to put you build application
+        "output": "release/${version}"
+        }
+    }
+
+*) Script:
+    -> "scripts": {
+        "dev": "vite",
+        "build": "vue-tsc --noEmit && vite build",
+        "serve": "vite preview",
+        // to serve the dist folder of our web project
+        "electron": "wait-on tcp:3000 && cross-env IS_DEV=true electron .",
+        "electron:pack": "electron-builder --dir",
+        "electron:dev": "concurrently -k \"cross-env BROWSER=none yarn dev\" \"yarn electron\"",
+        "electron:builder": "electron-builder",
+        "build:for:electron": "vue-tsc --noEmit && cross-env ELECTRON=true vite build",
+        "app:build": "yarn build:for:electron && yarn electron:builder"
+        // to build the electron application
+        },
