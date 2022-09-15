@@ -2,15 +2,19 @@
   "name": "03_electron_vue_typescript",
   "version": "0.1.0",
   "private": true,
+  "main": "dist/src/electron/main.js",
   "scripts": {
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build",
     "test:unit": "vue-cli-service test:unit",
     "test:e2e": "vue-cli-service test:e2e",
-    "lint": "vue-cli-service lint"
+    "lint": "vue-cli-service lint",
+    "electron:serve": " tsc && concurrently \"yarn serve\" \"tsc -w\" \"env-cmd -f .env.development electron .\"",
+    "packaged": "yarn build && tsc && electron-builder -c.extraMetadata.main=dist/src/electron/main.js"
   },
   "dependencies": {
     "core-js": "^3.8.3",
+    "electron-is-dev": "^2.0.0",
     "vue": "^3.2.13",
     "vue-router": "^4.0.3",
     "vuex": "^4.0.0"
@@ -31,7 +35,12 @@
     "@vue/test-utils": "^2.0.0-0",
     "@vue/vue3-jest": "^27.0.0-alpha.1",
     "babel-jest": "^27.0.6",
+    "concurrently": "^7.4.0",
     "cypress": "^9.7.0",
+    "electron": "^20.1.4",
+    "electron-builder": "^23.3.3",
+    "electron-reloader": "^1.2.3",
+    "env-cmd": "^10.1.0",
     "eslint": "^7.32.0",
     "eslint-config-prettier": "^8.3.0",
     "eslint-plugin-prettier": "^4.0.0",
@@ -41,6 +50,7 @@
     "sass": "^1.32.7",
     "sass-loader": "^12.0.0",
     "ts-jest": "^27.0.4",
+    "tsc": "^2.0.4",
     "typescript": "~4.5.5"
   }
 }
