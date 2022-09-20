@@ -3,14 +3,14 @@
   "private": true,
   "version": "0.0.0",
   "author": "roman-ojha",
-  "main": "electron/electron.js",
+  "main": "electron-dist/electron/electron.js",
   "scripts": {
     "dev": "vite",
     "build": "vue-tsc --noEmit && vite build",
     "serve": "vite preview",
     "electron": "wait-on tcp:5173 && cross-env IS_DEV=true electron .",
     "electron:pack": "electron-builder --dir",
-    "electron:dev": "concurrently -k \"cross-env BROWSER=none yarn dev\" \"yarn electron\"",
+    "electron:dev": "tsc && concurrently -k \"cross-env BROWSER=none yarn dev\" \"yarn electron\"",
     "electron:builder": "electron-builder",
     "build:for:electron": "vue-tsc --noEmit && cross-env ELECTRON=true vite build",
     "app:build": "yarn build:for:electron && yarn electron:builder"
@@ -24,6 +24,7 @@
     "cross-env": "^7.0.3",
     "electron": "^20.1.4",
     "electron-builder": "^23.3.3",
+    "tsc": "^2.0.4",
     "typescript": "^4.6.4",
     "vite": "^3.1.0",
     "vue-tsc": "^0.40.4",
@@ -42,7 +43,7 @@
     },
     "files": [
       "dist/**/*",
-      "electron/**/*"
+      "electron-dist/**/*"
     ],
     "directories": {
       "buildResources": "assets",
