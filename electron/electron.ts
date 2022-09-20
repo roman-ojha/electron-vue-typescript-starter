@@ -6,6 +6,12 @@ import { app, BrowserWindow } from "electron";
 
 const isDev = process.env.IS_DEV == "true" ? true : false;
 
+if (isDev) {
+  try {
+    require("electron-reloader")(module);
+  } catch (_) {}
+}
+
 function createWindow() {
   // Create the browser window.
   const mainWindow = new BrowserWindow({
@@ -22,7 +28,7 @@ function createWindow() {
   mainWindow.loadURL(
     isDev
       ? "http://localhost:5173"
-      : `file://${path.join(__dirname, "../dist/index.html")}`
+      : `file://${path.join(__dirname, "../../dist/index.html")}`
   );
   // Open the DevTools.
   if (isDev) {
